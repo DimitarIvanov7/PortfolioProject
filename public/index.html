@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Web site created using create-react-app" />
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,500;1,300&display=swap" rel="stylesheet">
+    
+    <title>React App</title>
+  </head>
+
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+
+  <style>
+    * {
+      margin: 0;
+      font-family: 'Urbanist', sans-serif;
+    }
+
+    html {
+      height: 0;
+    }
+
+    body {
+      height: fit-content;
+      min-height: 100%;
+      /* background-color: aqua; */
+      background-color: black;
+    }
+
+
+  </style>
+
+  <script type="text/javascript" src="./vanilla-tilt.js"></script>
+  <script>
+    //matrix effect
+    const canvas = document.querySelectorAll('#canvas');
+
+    function matrixAnimation(canvas){
+    
+      const context = canvas.getContext('2d')
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+      const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      const nums = '0123456789';
+
+      const alphabet = katakana + latin + nums;
+
+      const fontSize = 16;
+      const columns = canvas.width/fontSize;
+
+      const rainDrops = [];
+
+      for( let x = 0; x < columns; x++ ) {
+        rainDrops[x] = 1;
+      }
+
+      const draw = () => {
+        context.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        
+        context.fillStyle = '#45A29E';
+        context.font = fontSize + 'px monospace';
+
+        for(let i = 0; i < rainDrops.length; i++)
+        {
+          const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+          context.fillText(text, i*fontSize, rainDrops[i]*fontSize);
+          
+          if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975){
+            rainDrops[i] = 0;
+              }
+          rainDrops[i]++;
+        }
+      };
+
+      setInterval(draw, 30);
+    }
+
+    canvas.forEach(canv => matrixAnimation(canv))
+
+
+    //tilt effect
+    VanillaTilt.init(document.querySelectorAll(".image-tilt"), {
+      max: 25,
+      speed: 400
+	  });
+
+  </script>
+
+</html>
