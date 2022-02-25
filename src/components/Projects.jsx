@@ -7,10 +7,12 @@ const Container = styled.div`
     border: 1px solid #66FCF1;
     width: 90%;
     margin: 2rem 0;
-    background-color: #1f2833;
+    background-color: #1f283340;
+    aspect-ratio: 16/9;
 `
 
 const Wrapper = styled.div`
+    aspect-ratio: inherit;
     
 `
 
@@ -24,18 +26,26 @@ const Headline = styled.h2`
 
 const UpPart = styled.div`
     position: relative;
+    /* aspect-ratio: 16/9; */
+    
     
 `
 
 const DownPart = styled.div`
     color: #66FCF1;
     margin: 1rem 2.3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `
 
 const Description = styled.p`
     font-size: 25px;
     /* height: 6rem; */
     /* min-height: fit-content; */
+`
+
+const ButtonContainer = styled.div`
 `
 
 const Button = styled.button`
@@ -55,6 +65,7 @@ const Button = styled.button`
 `
 
 const TechnologyUl = styled.ul`
+    aspect-ratio: 1/1;
     background-color: #1f2833;
     width: fit-content;
     padding: .5rem 2rem;
@@ -74,18 +85,18 @@ const TechnologyUl = styled.ul`
 
 const TechnologyLi = styled.li`
     font-weight: bold;
-    font-size: ${props => props.title === "true" ? "35px" : "25px"};
+    font-size: ${props => props.title === "true" ? "25px" : "20px"};
     list-style-type:  ${props => props.title === "true" && "none"};
     color: #66FCF1;
     
 `
 
 const Image = styled.div`
-    width: 90%;
+    max-width: 90%;
+    aspect-ratio: 18/9;
     margin: 0 auto;
     background: url(${props => props.img});
     background-size: cover;
-    height: 25rem;
     transition: all 1s ease-out;
     box-shadow: inset 0 0 0 1000px #66fcf232;
     transform-style: preserve-3d;
@@ -95,6 +106,7 @@ const Image = styled.div`
 
     &:hover {
         box-shadow: none;
+        
     }
 
     &:hover ${TechnologyUl} {
@@ -128,8 +140,11 @@ function Projects({title, info, img, technology, descRef}) {
             </UpPart>
             <DownPart>
                 <Description ref={descRef}>{info} <PulsatingCursor /></Description>
-                <Button>Visit</Button>
-                <Button>GitHub</Button>
+                <ButtonContainer>
+                    <Button>Visit</Button>
+                    <Button>GitHub</Button>
+                </ButtonContainer>
+                
             </DownPart>
 
         </Wrapper>
