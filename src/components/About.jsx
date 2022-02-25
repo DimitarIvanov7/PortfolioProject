@@ -34,10 +34,10 @@ const Text = styled.p`
   
 `
 
-function About() {
+function About({aboutRef}) {
   return (
-    <Container>
-      <Headline>About me</Headline>
+    <Container >
+      <Headline ref={aboutRef} >About me</Headline>
       <NameContainer id='particle-text'/>
       <Text>I come from a digital marketing background, created my first WordPress site in 2018. After a couple of years, I learned programming/web development so I can create modern websites from scratch. I first started with Python but then I learned HTML, CSS, Javascript and React.<br></br><br></br>In my free time I like to play sports, play chess, visiting new places and learning new things.</Text>
       

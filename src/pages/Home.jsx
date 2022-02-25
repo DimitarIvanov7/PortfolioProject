@@ -10,6 +10,8 @@ import PulsatingCursor from '../components/PulsatingCursor'
 import Skills from '../components/Skills'
 import About from '../components/About'
 import Contact from '../components/Contact'
+import { useWindowScroll} from 'react'
+import { useScrollTo } from 'react-scroll';
 
 const Canvas = styled.canvas`
   height: ${props=> props.height ? props.height : "89.5vh"};
@@ -96,6 +98,17 @@ const SkillsContainer = styled.div`
 `
 
 function Home() {
+  //sections refs
+
+  const projectsRef = useRef();
+
+  const skillsRef = useRef();
+
+  const aboutRef = useRef();
+
+  const contactRef = useRef();
+
+
   const headlineRef = useRef(null);
 
   const desc1Ref = useRef(null);
@@ -196,6 +209,23 @@ function Home() {
     }, speed)
   }
 
+  //scrolling
+
+  const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+  const scrollAbout = () => {
+
+    const body = document.body;
+    const html = document.documentElement;
+
+    const height = Math.max( body.scrollHeight, body.offsetHeight, 
+      html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+    console.log(height);
+    console.log(aboutRef.current.getBoundingClientRect().y + height);
+    window.scrollTo({top: aboutRef.current.getBoundingClientRect().top + height, behavior: "smooth"})
+}
+
   return (
     <div className="main-cont">
       <Navbar/>
@@ -204,7 +234,7 @@ function Home() {
           <Headline ref={headlineRef}>{typingText.headline}
             <PulsatingCursor />
           </Headline>
-          <HeroPar>React front-end</HeroPar>
+          <HeroPar>Javascript / React front-end</HeroPar>
           <MainButton>Projects</MainButton>
           <MainButton>Contact</MainButton>
       </HeroWrapper>
@@ -212,21 +242,21 @@ function Home() {
       <Canvas height={projectsHeightRef.current && projectsHeightRef.current.clientHeight} id='canvas'/>
       <RestPage ref={projectsHeightRef}>
       
-        <ProjectsContainer id='projectsContainer'>
+        <ProjectsContainer id='projectsContainer' ref={projectsRef}>
           <ProjectInfo>Projects</ProjectInfo>
           <Projects descRef={desc1Ref} title={"Vesta-s real estate agency website"} technology={["Technology:", "HTML", "CSS/SASS", "Javascript", "Node.js/Express", "MongoDB"]} info={typingText.desc1} img={'/images/vesta-s.png'}/>
           <Projects descRef={desc2Ref} title={"Compare States App"} technology={["Technology:", "React", "React Router", "React Tables", "Node.js/Express", "MongoDB"]} info={typingText.desc2} img={'/images/compare-states.png'}/>
           
         </ProjectsContainer>
-        <SkillsContainer height={projectsHeightRef.current && projectsHeightRef.current.clientHeight} id="skills-container">
+        <SkillsContainer ref={skillsRef} height={projectsHeightRef.current && projectsHeightRef.current.clientHeight} id="skills-container">
           <Skills />
         </SkillsContainer>
-        <About/>
-        <Contact/>
+        <About aboutRef={aboutRef}/>
+        <Contact ref={contactRef}/>
       </RestPage>
       
       
-      <Footer/>
+      <Footer scrollTop={scrollTop} scrollAbout = {aboutRef.current && scrollAbout}/>
     </div>
   )
 }
