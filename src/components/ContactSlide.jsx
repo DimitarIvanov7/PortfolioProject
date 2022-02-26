@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FaEnvelope } from 'react-icons/fa';
+import {desktop, bigTablet} from '../responsive'
 
 const Container = styled.div`
     width: 100%;
@@ -9,6 +10,9 @@ const Container = styled.div`
     border-bottom: 1px solid aqua;
     border-top: 1px solid aqua;
     margin: 0;
+    ${bigTablet({
+      marginTop: "90vh"
+    })}
 `
 const Paragraph = styled.p`
     color: #66FCF1;
@@ -21,14 +25,28 @@ const Paragraph = styled.p`
 `
 
 
-function ContactSlide() {
+function ContactSlide({scrollContact}) {
   return (
     <Container>
-        <Paragraph>Let's talk <FaEnvelope style={{
-          margin: " .3rem 1rem 0 1rem",
-          // padding: "2px"
-          }}/>
-        </Paragraph>
+
+      <Paragraph onClick={scrollContact}>Let's talk 
+            <FaEnvelope style={{
+            margin: " .3rem 1rem 0 1rem",
+            }}/>
+      </Paragraph>
+        
+          {/* <Paragraph onClick={scrollContact}>Let's talk 
+            <Link to='#' onClick={(e) => {
+                window.location = "mailto:dimiturivano92@gmail.com";
+                console.log("dick");
+                e.preventDefault();
+                }}>
+                <FaEnvelope style={{
+                margin: " .3rem 1rem 0 1rem",
+                }}/>
+           </Link>
+          </Paragraph> */}
+
     </Container>
   )
 }

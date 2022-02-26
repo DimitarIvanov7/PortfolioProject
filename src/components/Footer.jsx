@@ -7,7 +7,6 @@ const Container = styled.div`
     background-color: #0B0C10;
     height: 4rem;
     z-index: 5;
-    /* margin-top: .5rem; */
     padding-top: 2rem;
 `
 
@@ -21,6 +20,7 @@ const LinksUl = styled.ul`
 const Links = styled.div`
     color:#66FCF1;
     cursor: ${props => props.link === "link" && "pointer"};
+    z-index: 10;
 `
 
 

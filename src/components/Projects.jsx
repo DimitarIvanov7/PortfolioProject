@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useState, useRef, useEffect } from 'react'
 import PulsatingCursor from './PulsatingCursor'
+
+import {phone} from '../responsive'
 
 const Container = styled.div`
     border: 1px solid #66FCF1;
@@ -62,6 +63,11 @@ const Button = styled.button`
         background-color: #66FCF1;
         cursor: pointer;
     }
+    ${phone({
+      fontSize: "25px",
+      margin: "1rem 0",
+      marginRight: "2rem"
+    })}
 `
 
 const TechnologyUl = styled.ul`
@@ -114,16 +120,16 @@ const Image = styled.div`
     }
 `
 
-function Projects({title, info, img, technology, descRef}) {
+function Projects({title, info, img, technology, descRef, projectsRef}) {
 
     // console.log(info);
 
   return (
-    <Container>
-        <Headline>{title}</Headline>
+    <Container >
+        <Headline>{title}<PulsatingCursor /></Headline>
         <Wrapper>
             <UpPart>
-                <Image className='image-tilt' img={img}>
+                <Image ref={descRef} className='image-tilt' img={img}>
                 
                     <TechnologyUl>
                         {technology.map((tech, index) => {
@@ -139,7 +145,7 @@ function Projects({title, info, img, technology, descRef}) {
                 </Image>
             </UpPart>
             <DownPart>
-                <Description ref={descRef}>{info} <PulsatingCursor /></Description>
+                <Description >{info}</Description>
                 <ButtonContainer>
                     <Button>Visit</Button>
                     <Button>GitHub</Button>

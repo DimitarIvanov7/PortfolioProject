@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import {useRef } from 'react'
 
 
 const Container = styled.div`
@@ -29,15 +30,16 @@ const Item = styled.li`
   color:#66FCF1;
 `
 
-function Navbar() {
+const Navbar = ({scrollProjects, scrollAbout, scrollContact}) => {
+
   return (
     <Container>
         <Wrapper>
           <MenuItems>
             <Item>01. Home</Item>
-            <Item>02. Projects</Item>
-            <Item>03. About</Item>
-            <Item>04. Contact</Item>
+            <Item onClick={() => scrollProjects()}>02. Projects</Item>
+            <Item onClick={() => scrollAbout()}>03. About</Item>
+            <Item onClick={() => scrollContact()}>04. Contact</Item>
           </MenuItems>
         </Wrapper>
     </Container>

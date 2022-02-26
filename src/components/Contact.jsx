@@ -4,6 +4,8 @@ import { FaEnvelope } from 'react-icons/fa';
 
 import { FaPhone } from 'react-icons/fa';
 
+import {desktop, phone} from '../responsive'
+
 const Container = styled.div`
     width: 90%;
     margin: 5rem 0;
@@ -39,11 +41,19 @@ const contactStyled = `
 const EmailContainer = styled.div`
 
     ${props => props.stiling}
+
+    ${phone({
+        fontSize: "15px"
+    })}
 `
 
 const PhoneContainer = styled.div`
 
     ${props => props.stiling}
+
+    ${phone({
+        fontSize: "15px"
+    })}
     
 `
 
@@ -54,6 +64,14 @@ const Wrapper = styled.form`
     gap: 2rem;
     width: 45%;
     margin: 2rem auto;
+    margin-bottom: 0;
+    ${desktop({
+        width: "65%",
+    })}
+
+    ${phone({
+        width: "85%",
+    })}
     
 `
 
@@ -61,7 +79,7 @@ const Headline = styled.h2`
     color: #66FCF1;
     font-size: 45px;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 `
 
 const Name = styled.input`
@@ -109,12 +127,12 @@ const Submit = styled.button`
     }
 `
 
-function Contact() {
+function Contact({contactRef}) {
   return (
-    <Container>Contact
-        <Headline>Contact me</Headline>
+    <Container >
+        <Headline ref={contactRef}>Contact me</Headline>
         <AdditinalInfoCont>
-            <EmailContainer stiling={contactStyled}>
+            <EmailContainer  stiling={contactStyled}>
                 <p><FaEnvelope/>dimiturivanov92@gmail.com</p>
             </EmailContainer>
             <PhoneContainer stiling={contactStyled}>

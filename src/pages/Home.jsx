@@ -1,6 +1,6 @@
 import React from 'react'
 import Navbar from '../components/Navbar'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import Footer from '../components/Footer'
 import Projects from '../components/Projects'
 import ContactSlide from '../components/ContactSlide'
@@ -10,13 +10,19 @@ import PulsatingCursor from '../components/PulsatingCursor'
 import Skills from '../components/Skills'
 import About from '../components/About'
 import Contact from '../components/Contact'
-import { useWindowScroll} from 'react'
-import { useScrollTo } from 'react-scroll';
+import matrixEffect from '../hooks/matrixEffect'
+
+import {desktop, bigTablet, phone} from '../responsive'
+import { FaBorderNone } from 'react-icons/fa'
 
 const Canvas = styled.canvas`
   height: ${props=> props.height ? props.height : "89.5vh"};
   width: 100%;
   margin: 0;
+  ${bigTablet({
+    // display: `${props=> props.height ? "none" : "89.5vh"}`
+    display: "none"
+  })}
 
 `
 
@@ -58,28 +64,31 @@ const MainButton = styled.button`
 const RestPage = styled.div`
   display: flex;
   width: 100%;
+  height: fit-content;
   flex-direction: column;
   align-items: center;
   position: absolute;
   top: 100vh;
-  padding: 5rem 0;
+  padding: 3rem 0 0 0;
   left: 0;
   right: 0;
   margin: auto;
+  ${bigTablet({
+    position: "relative",
+    top: 0
+  })}
 `
 
 const ProjectsContainer = styled.div`
-  /* background-color: #1f2833; */
   display: flex;
   width: 70%;
   flex-direction: column;
   align-items: center;
-  /* position: absolute;
-  top: 100vh;
-  padding: 5rem 0;
-  left: 0;
-  right: 0;
-  margin: auto; */
+  ${desktop({width:"90%"})}
+  ${phone({
+      width:"98%"
+    })}
+
 `
 
 const ProjectInfo = styled.h2`
@@ -108,6 +117,35 @@ function Home() {
 
   const contactRef = useRef();
 
+  const canvas1Ref = useRef();
+
+  const canvas2Ref = useRef();
+
+  //canvas height calculation
+  const projectsHeightRef = useRef();
+
+  const [dimensions, setDimensions] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  const handleResize = () => {
+    setDimensions({
+      width: window.innerWidth,
+      height: window.innerHeight,
+    });
+    // setResstContainerHeight(
+    //   projectsHeightRef.current.offsetHeight
+    // )
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize, false);
+  }, []);
+
+  useEffect(() => {
+    matrixEffect([canvas1Ref, canvas2Ref], dimensions)
+  }, [])
 
   const headlineRef = useRef(null);
 
@@ -132,9 +170,6 @@ function Home() {
   const isVisibleDesc2 = useElementObserver({
     options
   }, desc2Ref);
-  
-  //canvas height calculation
-  const projectsHeightRef = useRef();
 
   //visibility state
   const [visibility, setVisibility] = useState({
@@ -156,6 +191,7 @@ function Home() {
     })}
 
     if(isVisibleDesc2) {
+      console.log("visible");
       setVisibility({...visibility, 
         desc2: true
     })}
@@ -170,8 +206,8 @@ function Home() {
   });
 
   const headlineText = "Hi, my name is Dimitar, I'm a web developer";
-  const desc1Text = "A website for a real estate company where brokers can post the properties they sell. Users can then view those properties and sort them by price, size etc as well as search by location.";
-  const desc2Text = "A fun React app I created that compares the search vs competition for jobs in different US states. It uses Google Search API, Google Trends API and Census API. Users can add jobs they are interested it, see and sort the results as well as delete jobs."
+  const desc1Text = "Vesta-s real estate agency website";
+  const desc2Text = "Compare Jobs in States App"
 
   useEffect(() => {
     if(visibility.headline && !headlineRef.current.childNodes[0].length) typeWriteHeadline([headlineText], "headline");
@@ -181,13 +217,15 @@ function Home() {
   useEffect(() => {
     if(visibility.desc1 && typingText.desc1.length === 0 && typingText.headline.length===headlineText.length) {
       
-      typeWriteHeadline([desc1Text], "desc1", 30);
+      typeWriteHeadline([desc1Text], "desc1", 80);
     }
 
   },[visibility.desc1, typingText.headline])
 
   useEffect(() => {
-    if(visibility.desc2 && typingText.desc2.length === 0 && typingText.desc1.length===desc1Text.length) typeWriteHeadline([desc2Text], "desc2", 30)
+    if(visibility.desc2) console.log("work");
+    
+    if(visibility.desc2 && typingText.desc2.length === 0 && typingText.desc1.length===desc1Text.length) typeWriteHeadline([desc2Text], "desc2", 80)
 
   },[visibility.desc2, typingText.desc1])
 
@@ -213,46 +251,51 @@ function Home() {
 
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
+  const scrollProjects = () => {
+    window.scrollTo({top: projectsRef.current.offsetTop + window.innerHeight, behavior: "smooth"})
+  }
+
+  const scrollContact = () => {
+    window.scrollTo({top: contactRef.current.offsetTop + window.innerHeight, behavior: "smooth"})
+  }
+
   const scrollAbout = () => {
+    window.scrollTo({top: aboutRef.current.offsetTop + window.innerHeight, behavior: "smooth"})
+  }
 
-    const body = document.body;
-    const html = document.documentElement;
+  // project infos
 
-    const height = Math.max( body.scrollHeight, body.offsetHeight, 
-      html.clientHeight, html.scrollHeight, html.offsetHeight );
+  const infoProject1 = "A website for a real estate company where brokers can post the properties they sell. Users can then view those properties and sort them by price, size etc as well as search by location.";
 
-    console.log(height);
-    console.log(aboutRef.current.getBoundingClientRect().y + height);
-    window.scrollTo({top: aboutRef.current.getBoundingClientRect().top + height, behavior: "smooth"})
-}
+  const infoProject2 = "A fun React app I created that compares the search vs competition for jobs in different US states. It uses Google Search API, Google Trends API and Census API. Users can add jobs they are interested it, see and sort the results as well as delete jobs."
 
   return (
     <div className="main-cont">
-      <Navbar/>
-      <Canvas id='canvas'/>
+      <Navbar scrollProjects={scrollProjects} scrollAbout={scrollAbout} scrollContact={scrollContact}/>
+      <Canvas ref={canvas1Ref} id='canvas'/>
       <HeroWrapper>
           <Headline ref={headlineRef}>{typingText.headline}
             <PulsatingCursor />
           </Headline>
           <HeroPar>Javascript / React front-end</HeroPar>
-          <MainButton>Projects</MainButton>
-          <MainButton>Contact</MainButton>
+          <MainButton onClick={() => scrollProjects()}>Projects</MainButton>
+          <MainButton onClick={() => scrollContact()}>Contact</MainButton>
       </HeroWrapper>
-      <ContactSlide/>
-      <Canvas height={projectsHeightRef.current && projectsHeightRef.current.clientHeight} id='canvas'/>
+      <ContactSlide scrollContact={scrollContact}/>
+      <Canvas ref={canvas2Ref} height={projectsHeightRef.current && projectsHeightRef.current.clientHeight} id='canvas'/>
       <RestPage ref={projectsHeightRef}>
       
         <ProjectsContainer id='projectsContainer' ref={projectsRef}>
           <ProjectInfo>Projects</ProjectInfo>
-          <Projects descRef={desc1Ref} title={"Vesta-s real estate agency website"} technology={["Technology:", "HTML", "CSS/SASS", "Javascript", "Node.js/Express", "MongoDB"]} info={typingText.desc1} img={'/images/vesta-s.png'}/>
-          <Projects descRef={desc2Ref} title={"Compare States App"} technology={["Technology:", "React", "React Router", "React Tables", "Node.js/Express", "MongoDB"]} info={typingText.desc2} img={'/images/compare-states.png'}/>
+          <Projects descRef={desc1Ref} title={typingText.desc1} technology={["Technology:", "HTML", "CSS/SASS", "Javascript", "Node.js/Express", "MongoDB"]} info={infoProject1} img={'/images/vesta-s.png'}/>
+          <Projects descRef={desc2Ref} title={typingText.desc2} technology={["Technology:", "React", "React Router", "React Tables", "Node.js/Express", "MongoDB"]} info={infoProject2} img={'/images/compare-states.png'}/>
           
         </ProjectsContainer>
-        <SkillsContainer ref={skillsRef} height={projectsHeightRef.current && projectsHeightRef.current.clientHeight} id="skills-container">
+        <SkillsContainer id="skills-container">
           <Skills />
         </SkillsContainer>
         <About aboutRef={aboutRef}/>
-        <Contact ref={contactRef}/>
+        <Contact contactRef={contactRef}/>
       </RestPage>
       
       
