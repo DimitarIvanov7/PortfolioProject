@@ -6,6 +6,10 @@ import { FaPhone } from 'react-icons/fa';
 
 import {desktop, phone} from '../responsive'
 
+import emailjs from 'emailjs-com';
+
+import {useRef} from 'react'
+
 const Container = styled.div`
     width: 90%;
     margin: 5rem 0;
@@ -42,18 +46,23 @@ const EmailContainer = styled.div`
 
     ${props => props.stiling}
 
-    ${phone({
-        fontSize: "15px"
-    })}
+    p {
+        ${phone({
+        fontSize: "18px"
+        })}
+    }
+
 `
 
 const PhoneContainer = styled.div`
 
     ${props => props.stiling}
 
-    ${phone({
-        fontSize: "15px"
-    })}
+    p {
+        ${phone({
+        fontSize: "18px"
+        })}
+    }
     
 `
 
@@ -62,7 +71,7 @@ const Wrapper = styled.form`
     flex-direction: column;
     align-items: center;
     gap: 2rem;
-    width: 45%;
+    width: 55%;
     margin: 2rem auto;
     margin-bottom: 0;
     ${desktop({
@@ -72,7 +81,7 @@ const Wrapper = styled.form`
     ${phone({
         width: "85%",
     })}
-    
+
 `
 
 const Headline = styled.h2`
@@ -128,6 +137,24 @@ const Submit = styled.button`
 `
 
 function Contact({contactRef}) {
+
+    const formRef = useRef()
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+    
+        emailjs.sendForm('service_sy0llgc', 'template_kn05faq', formRef.current, '1XZZad-Lgx5OuiV2G')
+          .then((result) => {
+              console.log(result.text);
+          }, (error) => {
+              console.log(error.text);
+        });
+
+        e.target.reset();
+        alert("Message sent!");  
+    };
+
+
   return (
     <Container >
         <Headline ref={contactRef}>Contact me</Headline>
@@ -139,10 +166,10 @@ function Contact({contactRef}) {
                 <p><FaPhone/>+359 887 917 209</p>
             </PhoneContainer>
         </AdditinalInfoCont>
-        <Wrapper>
-            <Name placeholder='name'/>
-            <Email placeholder='email'/>
-            <Message placeholder='message'/>
+        <Wrapper ref={formRef} onSubmit={sendEmail}>
+            <Name placeholder='name' name='name' required/>
+            <Email placeholder='email' name='email' required/>
+            <Message placeholder='message' name='message' required/>
             <Submit type='submit'>Send </Submit>
         </Wrapper>
     </Container>

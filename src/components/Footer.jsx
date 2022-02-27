@@ -14,6 +14,7 @@ const LinksUl = styled.ul`
     display: flex;
     justify-content: center;
     gap: 2rem;
+    padding: 0;
     padding-top: 1rem;
 `
 

@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import PulsatingCursor from './PulsatingCursor'
-
 import {phone} from '../responsive'
+
+import {Link} from 'react-router-dom'
 
 const Container = styled.div`
     border: 1px solid #66FCF1;
@@ -27,9 +28,6 @@ const Headline = styled.h2`
 
 const UpPart = styled.div`
     position: relative;
-    /* aspect-ratio: 16/9; */
-    
-    
 `
 
 const DownPart = styled.div`
@@ -42,8 +40,6 @@ const DownPart = styled.div`
 
 const Description = styled.p`
     font-size: 25px;
-    /* height: 6rem; */
-    /* min-height: fit-content; */
 `
 
 const ButtonContainer = styled.div`
@@ -79,9 +75,7 @@ const TechnologyUl = styled.ul`
     height: fit-content;
     top: 0;
     left: 0;
-    /* right: 0; */
     bottom: 0;
-    /* margin: auto; */
     border: 5px solid #66FCF1;
     transform: translateZ(20px) scaleY(0);
     transform-origin: top;
@@ -120,9 +114,11 @@ const Image = styled.div`
     }
 `
 
-function Projects({title, info, img, technology, descRef, projectsRef}) {
+function Projects({title, info, img, technology, descRef, redirectSite}) {
 
-    // console.log(info);
+    const redirect = (location) => {
+        window.open(location);
+    }
 
   return (
     <Container >
@@ -147,8 +143,9 @@ function Projects({title, info, img, technology, descRef, projectsRef}) {
             <DownPart>
                 <Description >{info}</Description>
                 <ButtonContainer>
-                    <Button>Visit</Button>
-                    <Button>GitHub</Button>
+                    
+                        <Button onClick={() => redirect(redirectSite)}>Visit</Button>
+                        <Button>GitHub</Button>
                 </ButtonContainer>
                 
             </DownPart>

@@ -13,7 +13,8 @@ import Contact from '../components/Contact'
 import matrixEffect from '../hooks/matrixEffect'
 
 import {desktop, bigTablet, phone} from '../responsive'
-import { FaBorderNone } from 'react-icons/fa'
+
+
 
 const Canvas = styled.canvas`
   height: ${props=> props.height ? props.height : "89.5vh"};
@@ -287,8 +288,8 @@ function Home() {
       
         <ProjectsContainer id='projectsContainer' ref={projectsRef}>
           <ProjectInfo>Projects</ProjectInfo>
-          <Projects descRef={desc1Ref} title={typingText.desc1} technology={["Technology:", "HTML", "CSS/SASS", "Javascript", "Node.js/Express", "MongoDB"]} info={infoProject1} img={'/images/vesta-s.png'}/>
-          <Projects descRef={desc2Ref} title={typingText.desc2} technology={["Technology:", "React", "React Router", "React Tables", "Node.js/Express", "MongoDB"]} info={infoProject2} img={'/images/compare-states.png'}/>
+          <Projects descRef={desc1Ref} title={typingText.desc1} technology={["Technology:", "HTML", "CSS/SASS", "Javascript", "Node.js/Express", "MongoDB"]} info={infoProject1} img={'/images/vesta-s.png'} redirectSite={"https://vesta-s.dmvprojects.net/"}/>
+          <Projects descRef={desc2Ref} title={typingText.desc2} technology={["Technology:", "React", "React Router", "React Tables", "Node.js/Express", "MongoDB"]} info={infoProject2} img={'/images/compare-states.png'} redirectSite={"https://compare-states.dmvprojects.net/"}/>
           
         </ProjectsContainer>
         <SkillsContainer id="skills-container">
